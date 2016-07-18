@@ -11,6 +11,10 @@ import UIKit
 
 class MainViewController: UIViewController {
     
+    private var isStatusBarEnabled: Bool = true
+    
+    //MARK: - UIViewController
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -21,6 +25,7 @@ class MainViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         self.barHidden(true)
+        self.updateStatusBarStatus(false)
     }
 
     override func didReceiveMemoryWarning() {
@@ -28,28 +33,28 @@ class MainViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func prefersStatusBarHidden() -> Bool {
+        return !isStatusBarEnabled
+    }
+    
     
     //MARK: - private methods
+    
     private func barHidden(hidden: Bool) {
         if hidden == true {
             self.navigationController?.navigationBarHidden = true
-            print("come first")
         }
         else {
             self.navigationController?.navigationBarHidden = false
         }
     }
     
-    private func statusHidden(hidden: Bool) {
-        if hidden == true {
-            UIApplication.sharedApplication().statusBarHidden = true
-            print("come second")
-        }
-        else {
-            UIApplication.sharedApplication().statusBarHidden = false
-        }
-    
+    private func updateStatusBarStatus(enabled: Bool) {
+        isStatusBarEnabled = enabled
+        self.setNeedsStatusBarAppearanceUpdate()
     }
+    
+    
 
     /*
     // MARK: - Navigation
